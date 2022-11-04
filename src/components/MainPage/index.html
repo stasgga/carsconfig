@@ -1,0 +1,96 @@
+<div class="hello">
+  <v-dialog
+            v-model="dialog"
+            width="500"
+    >
+        <v-card class="dialog">
+            <v-text-field
+                    v-model="newConfigLabel"
+                    label="Name of the new configuration"
+            ></v-text-field>
+            <v-btn @click="addNewConfig">
+                Ok
+            </v-btn>
+        </v-card>
+    </v-dialog>
+  <v-snackbar v-model="snackbar" :timeout="2000">
+        Please fill of the fields
+    </v-snackbar>
+  <template>
+    <v-expansion-panels>
+      <v-expansion-panel
+                    v-for="(spec, i) in specifications"
+                    :key="i"
+            >
+                <v-expansion-panel-header>
+                    {{ spec.name }}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <p v-for="(prop, key) in spec"
+                       :key="key"
+                    >
+                        {{ key }}: {{ prop }}
+                    </p>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+      <v-expansion-panel>
+                <v-expansion-panel-header>
+                    +Make new specification
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <v-text-field
+                            v-model="newSpec.name"
+                            label="Name of specification"
+                    ></v-text-field>
+                    <v-select
+                            v-model="newSpec.engine"
+                            :items="engines"
+                            label="Engine"
+                    ></v-select>
+                    <v-select
+                            v-model="newSpec.interior"
+                            :items="interiors"
+                            label="Interior materials"
+                    ></v-select>
+                    <v-select
+                            v-model="newSpec.color"
+                            :items="colors"
+                            label="Color"
+                    ></v-select>
+                    <v-select
+                            v-model="newSpec.wheelRims"
+                            :items="rims"
+                            label="Wheel rims"
+                    ></v-select>
+                    <v-select
+                            v-model="newSpec.wheelType"
+                            :items="wheelTypes"
+                            label="Wheel type"
+                    ></v-select>
+                    <v-checkbox
+                            v-model="newSpec.airSuspension"
+                            label="Air suspension"
+                    ></v-checkbox>
+                    <v-text-field
+                            v-model="newSpec.signature"
+                            label="Signature on hood"
+                    ></v-text-field>
+                    <v-text-field
+                            v-for="(config, i) in newConfigs"
+                            v-model="config.value"
+                            :key="i"
+                            :label="config.label"
+                    ></v-text-field>
+                    <v-card class="button-container d-flex flex-row justify-space-around">
+                        <v-btn @click="dialog = true">
+                            +New configuration option
+                        </v-btn>
+                        <v-btn @click="saveSpecification">
+                            Save
+                        </v-btn>
+                    </v-card>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+    </v-expansion-panels>
+  </template>
+</div>
